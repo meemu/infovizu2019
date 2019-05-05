@@ -1,7 +1,9 @@
 import pandas as pd
 
-from bokeh.plotting import figure, show, output_file
-from bokeh.models import ColumnDataSource, HoverTool
+from bokeh.io import show, output_file
+from bokeh.plotting import figure
+from bokeh.layouts import column
+from bokeh.models import ColumnDataSource, HoverTool, Div
 
 # Selecting the data from .csv
 # downloaded from https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
@@ -55,6 +57,16 @@ p.add_tools(HoverTool(
     mode='vline'
 ))
 
+text1 = Div(text="""Your <a href="https://en.wikipedia.org/wiki/HTML">HTML</a>-supported text is initialized with the <b>text</b> argument.  The
+remaining div arguments are <b>width</b> and <b>height</b>. For this example, those values
+are <i>200</i> and <i>100</i> respectively.""",
+width=1000, height=50)
+
+text2 = Div(text="""Your <a href="https://en.wikipedia.org/wiki/HTML">HTML</a>-supported text is initialized with the <b>text</b> argument.  The
+remaining div arguments are <b>width</b> and <b>height</b>. For this example, those values
+are <i>200</i> and <i>100</i> respectively.""",
+width=1000, height=100)
+
 output_file('index.html')
 
-show(p)
+show(column(text1, p, text2))
