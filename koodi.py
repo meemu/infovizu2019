@@ -1,6 +1,6 @@
 import pandas as pd
 
-from bokeh.plotting import figure, show
+from bokeh.plotting import figure, show, output_file
 from bokeh.models import ColumnDataSource, HoverTool
 
 # Selecting the data from .csv
@@ -54,5 +54,7 @@ p.add_tools(HoverTool(
 
     mode='vline'
 ))
+
+output_file('index.html')
 
 show(p)
