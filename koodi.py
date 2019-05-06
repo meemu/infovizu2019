@@ -1,9 +1,13 @@
 import pandas as pd
 
 from bokeh.io import show, output_file
-from bokeh.plotting import figure
-from bokeh.layouts import column
-from bokeh.models import ColumnDataSource, HoverTool, Div
+from bokeh.plotting import figure, curdoc
+from bokeh.layouts import column, row
+from bokeh.models import ColumnDataSource, HoverTool, Div, Select
+from bokeh.sampledata.autompg import autompg_clean as df
+from bokeh.palettes import Inferno
+
+
 
 # Selecting the data from .csv
 # downloaded from https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
@@ -68,5 +72,3 @@ are <i>200</i> and <i>100</i> respectively.""",
 width=1000, height=100)
 
 output_file('index.html')
-
-show(column(text1, p, text2))
