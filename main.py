@@ -15,24 +15,30 @@ COLORS = Spectral5
 N_SIZES = len(SIZES)
 N_COLORS = len(COLORS)
 
-# data cleanup
-#df.cyl = df.cyl.astype(str)
-#df.yr = df.yr.astype(str)
+# unvalid data cleanup
 del df['country-year']
 del df['generation']
 del df['HDI for year']
 
+# Select the variables for the visulization
 columns = sorted(df.columns)
 discrete = [x for x in columns if df[x].dtype == object]
+discrete.remove(' gdp_for_year ($) ')
 continuous = [x for x in columns if x not in discrete]
 continuous.remove('year')
 
-yearly = df.groupby(['country','year']).size()
+#continuous = list([' gdp_for_year ($) ', 'gdp_per_capita ($)', 'suicides_no', 'population', 'suicides/100k pop'])
+#discrete = list(['year', 'age', 'country', 'sex'])
 
-data = df[df['year'] == 2015]
+# Here we set the dataframe to sum some of the columns, and exclude some of them
+summed = df.groupby(['country', 'year']).agg({'suicides_no': 'sum', 'population': 'sum', 'suicides/100k pop': 'sum', ' gdp_for_year ($) ': 'min', 'gdp_per_capita ($)': 'min'})
+
+# Initialize the view with the year 2015
+data = summed.loc[(summed.index.get_level_values(1) == 2015)]
 
 def create_figure():
-    data = df[df['year'] == slider.value]
+    # This responds to the visualization's slider component
+    data = summed.loc[(summed.index.get_level_values(1) == slider.value)]
     xs = data[x.value].values
     ys = data[y.value].values
     x_title = x.value.title()
@@ -80,7 +86,7 @@ def update(attr, old, new):
 x = Select(title='X-Axis', value='suicides/100k pop', options=continuous)
 x.on_change('value', update)
 
-y = Select(title='Y-Axis', value=' gdp_for_year ($) ', options=continuous)
+y = Select(title='Y-Axis', value='gdp_per_capita ($)', options=continuous)
 y.on_change('value', update)
 
 size = Select(title='Size', value='None', options=['None'] + continuous)

@@ -11,7 +11,7 @@ from bokeh.palettes import Inferno
 
 # Selecting the data from .csv
 # downloaded from https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
-master = pd.read_csv('data.csv')
+master = pd.read_csv('master.csv')
 columns = master[['country','year','sex','suicides_no']]
 finland = columns[columns['country'] == 'Finland']
 
