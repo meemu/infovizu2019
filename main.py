@@ -20,18 +20,23 @@ del df['country-year']
 del df['generation']
 del df['HDI for year']
 
+# Fix the broken column name and remove commas
+df.rename(columns={' gdp_for_year ($) ': 'gdp_for_year ($)'},
+          inplace=True)
+df['gdp_for_year ($)'] = df['gdp_for_year ($)'].astype(object)
+df["gdp_for_year ($)"] = df["gdp_for_year ($)"].str.replace(",","").astype(float)
+
 # Select the variables for the visulization
 columns = sorted(df.columns)
 discrete = [x for x in columns if df[x].dtype == object]
-discrete.remove(' gdp_for_year ($) ')
 continuous = [x for x in columns if x not in discrete]
 continuous.remove('year')
 
-#continuous = list([' gdp_for_year ($) ', 'gdp_per_capita ($)', 'suicides_no', 'population', 'suicides/100k pop'])
+#continuous = list(['gdp_for_year ($)', 'gdp_per_capita ($)', 'suicides_no', 'population', 'suicides/100k pop'])
 #discrete = list(['year', 'age', 'country', 'sex'])
 
 # Here we set the dataframe to sum some of the columns, and exclude some of them
-summed = df.groupby(['country', 'year']).agg({'suicides_no': 'sum', 'population': 'sum', 'suicides/100k pop': 'sum', ' gdp_for_year ($) ': 'min', 'gdp_per_capita ($)': 'min'})
+summed = df.groupby(['country', 'year']).agg({'suicides_no': 'sum', 'population': 'sum', 'suicides/100k pop': 'sum', 'gdp_for_year ($)': 'min', 'gdp_per_capita ($)': 'min'})
 
 # Initialize the view with the year 2015
 data = summed.loc[(summed.index.get_level_values(1) == 2015)]
@@ -86,7 +91,7 @@ def update(attr, old, new):
 x = Select(title='X-Axis', value='suicides/100k pop', options=continuous)
 x.on_change('value', update)
 
-y = Select(title='Y-Axis', value='gdp_per_capita ($)', options=continuous)
+y = Select(title='Y-Axis', value='gdp_for_year ($)', options=continuous)
 y.on_change('value', update)
 
 size = Select(title='Size', value='None', options=['None'] + continuous)
