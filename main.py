@@ -52,6 +52,7 @@ def create_figure():
     # This responds to the visualization's slider component
     data = summed.loc[(summed.index.get_level_values(1) == slider.value)]
     
+    # Data to be used in the visualization
     xs = data[x.value].values
     ys = data[y.value].values
     countries = data.index.get_level_values(0).values
@@ -66,8 +67,7 @@ def create_figure():
         kw['y_range'] = sorted(set(ys))
     kw['title'] = "%s vs %s" % (x_title, y_title)
 
-    p = figure(
-               plot_height=900,
+    p = figure(plot_height=900,
                plot_width=1200,
                tools='hover,box_zoom,save,reset',
                tooltips=[('', '@label')],
@@ -83,21 +83,20 @@ def create_figure():
         p.xaxis.major_label_orientation = pd.np.pi / 4
 
     sz = 9
-    if size.value != 'None':
-        if len(set(data[size.value])) > N_SIZES:
-            groups = pd.qcut(data[size.value].values, N_SIZES, duplicates='drop')
-        else:
-            groups = pd.Categorical(data[size.value])
-        sz = [SIZES[xx] for xx in groups.codes]
+    if len(set(data[size.value])) > N_SIZES:
+        groups = pd.qcut(data[size.value].values, N_SIZES, duplicates='drop')
+    else:
+        groups = pd.Categorical(data[size.value])
+    sz = [SIZES[xx] for xx in groups.codes]
 
     c = "#31AADE"
-    if color.value != 'None':
-        if len(set(data[color.value])) > N_COLORS:
-            groups = pd.qcut(data[color.value].values, N_COLORS, duplicates='drop')
-        else:
-            groups = pd.Categorical(data[color.value])
-        c = [COLORS[xx] for xx in groups.codes]
-        
+    if len(set(data[color.value])) > N_COLORS:
+        groups = pd.qcut(data[color.value].values, N_COLORS, duplicates='drop')
+    else:
+        groups = pd.Categorical(data[color.value])
+    c = [COLORS[xx] for xx in groups.codes]
+       
+    # This datasource is used for the glyphs
     source = ColumnDataSource(
             data=dict(
                     x=xs,
@@ -108,6 +107,7 @@ def create_figure():
             )
     )
 
+    # Here we draw the circle with the provided data
     p.circle('x', 'y', size='size', color='color', line_color='white', alpha=0.7, hover_color='black', hover_alpha=0.4, source=source)
 
     return p
