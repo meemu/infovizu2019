@@ -123,10 +123,10 @@ x.on_change('value', update)
 y = Select(title='Y-Axis', value='gdp_for_year ($)', options=continuous)
 y.on_change('value', update)
 
-size = Select(title='Size', value='suicides/100k pop', options=['None'] + continuous)
+size = Select(title='Size', value='suicides/100k pop', options=continuous)
 size.on_change('value', update)
 
-color = Select(title='Color', value='gdp_for_year ($)', options=['None'] + continuous)
+color = Select(title='Color', value='gdp_for_year ($)', options=continuous)
 color.on_change('value', update)
 
 slider = Slider(start=1987, end=2015, value=2015, step=1, title='Year')
