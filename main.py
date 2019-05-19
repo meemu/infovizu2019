@@ -147,7 +147,7 @@ females_yearly = females.groupby('year').sum()
 females_ds = ColumnDataSource(females_yearly)
 
 plot2 = figure(plot_height=500,
-           plot_width=1200,
+           plot_width=1400,
            h_symmetry=True,
            x_axis_label='Year',
            x_axis_type='linear',
@@ -160,7 +160,7 @@ plot2 = figure(plot_height=500,
            title='Suicide Rates in Finland from 1987 to 2016',
            title_location='above',
            tools='save',
-           min_border_left=100,
+           min_border_left=300,
            min_border_top=100,
            min_border_bottom=20, 
            min_border_right=20)
@@ -186,7 +186,7 @@ plot2.add_tools(HoverTool(
 
 # Setting up the HTML layout
 controls = column([x, y, color, size, slider], width=200)
-plot1 = row(create_figure(), controls)
+plot1 = row(controls, create_figure())
 layout = column(text1, plot1, text2, plot2)
 
 
