@@ -19,7 +19,7 @@ width=1000, height=100)
 
 # Selecting the data from .csv
 # downloaded from https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
-df = pd.read_csv('master.csv')
+df = pd.read_csv('data/master.csv')
 
 SIZES = list(range(10, 60, 1))
 COLORS = list(['#FDE724', '#B2DD2C', '#6BCD59', '#35B778', '#1E9C89', '#25828E', '#30678D', '#3E4989', '#472777', '#440154'])
@@ -72,6 +72,7 @@ def create_figure():
                **kw)
     p.xaxis.axis_label = x_title
     p.yaxis.axis_label = y_title
+    p.grid.grid_line_color = None
 
     if x.value in discrete:
         p.xaxis.major_label_orientation = pd.np.pi / 4
@@ -132,7 +133,7 @@ width=1000, height=50)
 # The second plot
 # Selecting the data from .csv
 # downloaded from https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
-master = pd.read_csv('master.csv')
+master = pd.read_csv('data/master.csv')
 columns2 = master[['country','year','sex','suicides_no']]
 finland = columns2[columns2['country'] == 'Finland']
 
