@@ -1,7 +1,7 @@
 import pandas as pd
 
 from bokeh.layouts import row, column
-from bokeh.models import Select, Slider, HoverTool, Div, ColumnDataSource
+from bokeh.models import Select, Slider, HoverTool, Div, ColumnDataSource, Label
 from bokeh.plotting import curdoc, figure
 
 
@@ -51,8 +51,11 @@ data = summed.loc[(summed.index.get_level_values(1) == 2015)]
 def create_figure():
     # This responds to the visualization's slider component
     data = summed.loc[(summed.index.get_level_values(1) == slider.value)]
+    
     xs = data[x.value].values
     ys = data[y.value].values
+    countries = data.index.get_level_values(0).values
+    
     x_title = x.value.title()
     y_title = y.value.title()
 
@@ -63,9 +66,11 @@ def create_figure():
         kw['y_range'] = sorted(set(ys))
     kw['title'] = "%s vs %s" % (x_title, y_title)
 
-    p = figure(plot_height=900,
+    p = figure(
+               plot_height=900,
                plot_width=1200,
-               tools='save,box_zoom,reset',
+               tools='hover,box_zoom,save,reset',
+               tooltips=[('', '@label')],
                min_border_left=100,
                min_border_bottom=100,
                min_border_right=20,
@@ -92,8 +97,18 @@ def create_figure():
         else:
             groups = pd.Categorical(data[color.value])
         c = [COLORS[xx] for xx in groups.codes]
+        
+    source = ColumnDataSource(
+            data=dict(
+                    x=xs,
+                    y=ys,
+                    label=countries,
+                    size=sz,
+                    color=c
+            )
+    )
 
-    p.circle(x=xs, y=ys, color=c, size=sz, line_color="white", alpha=0.7, hover_color='white', hover_alpha=0.5)
+    p.circle('x', 'y', size='size', color='color', line_color='white', alpha=0.7, hover_color='black', hover_alpha=0.4, source=source)
 
     return p
 
