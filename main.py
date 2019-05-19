@@ -21,8 +21,8 @@ width=1000, height=100)
 # downloaded from https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
 df = pd.read_csv('master.csv')
 
-SIZES = list(range(10, 50, 10))
-COLORS = list(['#FDE724', '#79D151', '#22A784', '#29788E', '#404387', '#440154'])
+SIZES = list(range(10, 60, 1))
+COLORS = list(['#FDE724', '#B2DD2C', '#6BCD59', '#35B778', '#1E9C89', '#25828E', '#30678D', '#3E4989', '#472777', '#440154'])
 N_SIZES = len(SIZES)
 N_COLORS = len(COLORS)
 
@@ -92,7 +92,7 @@ def create_figure():
             groups = pd.Categorical(data[color.value])
         c = [COLORS[xx] for xx in groups.codes]
 
-    p.circle(x=xs, y=ys, color=c, size=sz, line_color="white", alpha=0.6, hover_color='white', hover_alpha=0.5)
+    p.circle(x=xs, y=ys, color=c, size=sz, line_color="white", alpha=0.7, hover_color='white', hover_alpha=0.5)
 
     return p
 
