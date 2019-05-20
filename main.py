@@ -8,10 +8,13 @@ from bokeh.plotting import curdoc, figure
 
 
 # First block of text (before the first plot)
-text1 = Div(text="""Your <a href="https://en.wikipedia.org/wiki/HTML">HTML</a>-supported text is initialized with the <b>text</b> argument.  The
-remaining div arguments are <b>width</b> and <b>height</b>. For this example, those values
-are <i>200</i> and <i>100</i> respectively.""",
-width=1000, height=100)
+text1 = Div(text="""<div style="margin-left: 300px; margin-bottom: 50px;">
+                    <h1>World's suicides</h1>
+                    <p>In the visualization below you can choose information for both of the axis and what statistic the colors and sizes of the balls are tied to. The graph’s purpose is to visualize suicide data for educational purposes and general interest. Seeing the real causality relationships between parameters that are commonly thought to affect suicide rates hopefully will help seeing the real situation. Hovering over the data points also tells which country it represents.</p>
+                    <p>Data explanations: GDP for year tells what the gross domestic product. It is not really comparable between countries since smaller countries usually have a smaller GDP. That’s why there is also GDP per capita, which makes this same information comparable. Suicide amounts (suicides_no) is similar to GDP for year that it is not comparable to between countries with different populations, hence the parameter suicides/100k population.</p>
+                    <p>Color is a gradient from yellow to purple, the purpler the ball is the more it has the “color” data. Size works similarly, the bigger the ball is the more it has “size” data.</p>
+                    </div>
+                    """, width=1380)
 
 
 
@@ -137,10 +140,12 @@ slider.on_change('value', update)
 
 
 # Second block of text (after the first plot)
-text2 = Div(text="""Your <a href="https://en.wikipedia.org/wiki/HTML">HTML</a>-supported text is initialized with the <b>text</b> argument.  The
-remaining div arguments are <b>width</b> and <b>height</b>. For this example, those values
-are <i>200</i> and <i>100</i> respectively.""",
-width=1000, height=50)
+text2 = Div(text="""<div style="margin-left: 300px; margin-bottom: 20px;">
+                    <p>There are no clear causalities using the parameters in this visualization. Comparing suicides/100k population and GDP for a year forms two vague groups and the other one seems to have some relation between a bigger GDP and more suicides. This is not clear though and the other group clearly has a small GDP throughout the different suicide amounts.</p>
+                    <p>According to <a href="https://www.who.int/en/news-room/fact-sheets/detail/suicide">WHO</a> every year close to 800 000 people take their own life with many more who attempt suicide. Over 79% of global suicides occurred in low- and middle-income countries in 2016. This is affected by China and India having huge populations causing the suicide numbers to be high too.</p>
+                    <p>The clearest risk factor for suicide is a previous attempt and mental disorders, like depression and alcoholism. In addition to treating mental health issues, other ways to prevent suicides are means limitation and responsible media reporting. For example restriction of access to high windows or rooves helps to reduce suicides in big cities according to <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6191653/">studies</a></p>
+                    </div>
+                    """, width=1380)
 
 
 
@@ -178,7 +183,7 @@ plot2 = figure(plot_height=500,
            tools='save',
            min_border_left=300,
            min_border_top=100,
-           min_border_bottom=20, 
+           min_border_bottom=100, 
            min_border_right=20)
 
 plot2.grid.grid_line_color = None
@@ -200,12 +205,24 @@ plot2.add_tools(HoverTool(
 
 
 
+# Third and last block of text (after the second plot)
+text3 = Div(text="""<div style="margin-left: 300px; margin-bottom: 20px;">
+                    <p>According to another <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1489848/">study</a> the biggest suicide rates are in Eastern Europe, such as in Estonia, Latvia, Lithuania and to a lesser extent, Finland, Hungary and the Russian Federation. The lowest rates are found in Eastern Mediterranean region, especially in countries following Islamic traditions.</p>
+                    <p>In a <a href="https://helda.helsinki.fi/bitstream/handle/10138/174896/YHDESSAL.pdf?sequence=1">study in 2009</a> they noticed that since 1940s suicide rates have been changing differently between men and women in Finland. For men a turn for the worse was between 1968-1974 and for better in 1978-1995. During the first change alcohol consumption skyrocketed and people also started moving to cities from the countryside. For women the suicide rates started to grow in 1955-1959. That’s also when women started working outside of the home. During the beginning of economic depression in 1990 and 1991 the suicides of boys aged 15-19 more than doubled in Finland according to <a href="https://yle.fi/uutiset/3-5196431">Yle</a>. They guessed it would be because of the anxiety of families and the poor financial situation. <a href"https://thl.fi/fi/web/mielenterveys/mielenterveyden-edistaminen/itsemurhien-ehkaisy">THL</a>, a Finnish counterpart to WHO, suggest the same preventative measures to suicide as WHO above.</p>
+                    <p>Finland has been regarded as the happiest country in the world in several studies but we also especially historically have had relatively high suicide rates. <a href"http://healthland.time.com/2011/04/25/why-the-happiest-states-have-the-highest-suicide-rates/?xid=rss-health">Time magazine</a> suggests that “perhaps for those at the bottom end, in a way their situation may seem worse in relative terms, when compared with people who are close to them.. For someone who is quite unhappy, the relative comparison may lead to more unhappiness and depression”</p>
+                    </div>
+                    """, width=1380)
+
+
+
+
+
 # Setting up the HTML layout
 controls = column([x, y, color, size, slider], width=200)
 plot1 = row(controls, create_figure())
-layout = column(text1, plot1, text2, plot2)
+layout = column(text1, plot1, text2, plot2, text3)
 
 
 # Displaying everything
 curdoc().add_root(layout)
-curdoc().title = "Suicides"
+curdoc().title = "HTIS59 Information Visualization 2019"
