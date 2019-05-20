@@ -225,4 +225,4 @@ layout = column(text1, plot1, text2, plot2, text3)
 
 # Displaying everything
 curdoc().add_root(layout)
-curdoc().title = "HTIS59 Information Visualization 2019"
+curdoc().title = "HTIS59 Information Visualization 2019 - visual19"
